@@ -1,12 +1,10 @@
 ﻿namespace WorldWeb.Domain
 {
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
 
     public class Continent
     {
-        private readonly HashSet<Continent> constituentContinents = new HashSet<Continent>();
+        private readonly ContinentSet componentContinents = new ContinentSet();
 
         public Continent(string name)
         {
@@ -15,33 +13,20 @@
 
         public string Name { get; }
 
-        public IEnumerable<Continent> ConstituentContinents
-        {
-            get
-            {
-                var allConstituents = new HashSet<Continent>();
-               
-                foreach (var continent in this.constituentContinents)
-                {
-                    AddContinentToConstituentSet(continent, allConstituents);
-                }
+        public IEnumerable<Continent> ComponentContinents => this.componentContinents.AllContinents;
 
-                return new ReadOnlyCollection<Continent>(allConstituents.ToList());
-            }
+        public void AddComponentContinent(Continent continent)
+        {
+            this.componentContinents.Add(continent);
         }
 
-        public void AddConstituentContinent(Continent continent)
+        internal void AddToSet(HashSet<Continent> allContinents)
         {
-            this.constituentContinents.Add(continent);
-        }
-
-        private static void AddContinentToConstituentSet(Continent continent, HashSet<Continent> constituentSet)
-        {
-            if (constituentSet.Add(continent))
+            if (allContinents.Add(this))
             {
-                foreach (var constituent in continent.ConstituentContinents)
+                foreach (var component in this.ComponentContinents)
                 {
-                    AddContinentToConstituentSet(constituent, constituentSet);
+                    component.AddToSet(allContinents);
                 }
             }
         }

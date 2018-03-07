@@ -1,12 +1,10 @@
 ﻿namespace WorldWeb.Domain
 {
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
 
     public class Planet
     {
-        private readonly HashSet<Continent> continents = new HashSet<Continent>();
+        private readonly ContinentSet continents = new ContinentSet();
 
         public Planet(string name)
         {
@@ -15,7 +13,7 @@
 
         public string Name { get; }
 
-        public IEnumerable<Continent> Continents => new ReadOnlyCollection<Continent>(this.continents.ToList());
+        public IEnumerable<Continent> Continents => this.continents.AllContinents;
 
         public void AddContinent(Continent continent)
         {

@@ -39,48 +39,85 @@ namespace WorldWeb.Domain.Tests
             var africa = new Continent(Names.Africa);
 
             var eurasia = new Continent(Names.Eurasia);
-            eurasia.AddConstituentContinent(europe);
-            eurasia.AddConstituentContinent(asia);
+            eurasia.AddComponentContinent(europe);
+            eurasia.AddComponentContinent(asia);
 
             var afroEurasia = new Continent(Names.AfroEurasia);
-            afroEurasia.AddConstituentContinent(eurasia);
-            afroEurasia.AddConstituentContinent(africa);
+            afroEurasia.AddComponentContinent(eurasia);
+            afroEurasia.AddComponentContinent(africa);
 
-            afroEurasia.ConstituentContinents.Count().Should().Be(4);
-            afroEurasia.ConstituentContinents.Contains(eurasia).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(africa).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(europe).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(asia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Count().Should().Be(4);
+            afroEurasia.ComponentContinents.Contains(eurasia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(africa).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(europe).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(asia).Should().BeTrue();
 
-            afroEurasia.AddConstituentContinent(europe);
-            afroEurasia.AddConstituentContinent(asia);
+            afroEurasia.AddComponentContinent(europe);
+            afroEurasia.AddComponentContinent(asia);
 
-            afroEurasia.ConstituentContinents.Count().Should().Be(4);
+            afroEurasia.ComponentContinents.Count().Should().Be(4);
         }
 
         [Fact]
-        public void ContinentCantHaveSameConstituentContinentTwice()
+        public void ContinentCantHaveSameComponentsContinentTwice()
         {
             var europe = new Continent(Names.Europe);
             var asia = new Continent(Names.Asia);
             var africa = new Continent(Names.Africa);
 
             var eurasia = new Continent(Names.Eurasia);
-            eurasia.AddConstituentContinent(europe);
-            eurasia.AddConstituentContinent(asia);
+            eurasia.AddComponentContinent(europe);
+            eurasia.AddComponentContinent(asia);
 
             var afroEurasia = new Continent(Names.AfroEurasia);
-            afroEurasia.AddConstituentContinent(eurasia);
-            afroEurasia.AddConstituentContinent(africa);
-            afroEurasia.AddConstituentContinent(africa);
-            afroEurasia.AddConstituentContinent(europe);
-            afroEurasia.AddConstituentContinent(eurasia);
+            afroEurasia.AddComponentContinent(eurasia);
+            afroEurasia.AddComponentContinent(africa);
+            afroEurasia.AddComponentContinent(africa);
+            afroEurasia.AddComponentContinent(europe);
+            afroEurasia.AddComponentContinent(eurasia);
 
-            afroEurasia.ConstituentContinents.Count().Should().Be(4);
-            afroEurasia.ConstituentContinents.Contains(eurasia).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(africa).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(europe).Should().BeTrue();
-            afroEurasia.ConstituentContinents.Contains(asia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Count().Should().Be(4);
+            afroEurasia.ComponentContinents.Contains(eurasia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(africa).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(europe).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(asia).Should().BeTrue();
+        }
+
+        [Fact]
+        public void EarthWithCompositeContinets()
+        {
+            var europe = new Continent(Names.Europe);
+            var asia = new Continent(Names.Asia);
+            var africa = new Continent(Names.Africa);
+
+            var eurasia = new Continent(Names.Eurasia);
+            eurasia.AddComponentContinent(europe);
+            eurasia.AddComponentContinent(asia);
+
+            var afroEurasia = new Continent(Names.AfroEurasia);
+            afroEurasia.AddComponentContinent(eurasia);
+            afroEurasia.AddComponentContinent(africa);
+
+            var northAmerica = new Continent(Names.NorthAmerica);
+            var southAmerica = new Continent(Names.SouthAmerica);
+
+            var america = new Continent(Names.America);
+            america.AddComponentContinent(northAmerica);
+            america.AddComponentContinent(southAmerica);
+
+            var australia = new Continent(Names.Australia);
+            var oceania = new Continent(Names.Oceania);
+            oceania.AddComponentContinent(australia);
+
+            var antarctica = new Continent(Names.Antarctica);
+
+            var earth = new Planet(Names.Earth);
+            earth.AddContinent(afroEurasia);
+            earth.AddContinent(america);
+            earth.AddContinent(oceania);
+            earth.AddContinent(antarctica);
+
+            earth.Continents.Count().Should().Be(11);
         }
 
         private static class Names
