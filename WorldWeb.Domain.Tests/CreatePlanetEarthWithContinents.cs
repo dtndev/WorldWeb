@@ -46,11 +46,14 @@ namespace WorldWeb.Domain.Tests
             afroEurasia.AddComponentContinent(eurasia);
             afroEurasia.AddComponentContinent(africa);
 
-            afroEurasia.ComponentContinents.Count().Should().Be(4);
+            eurasia.ComponentContinents.Contains(europe).Should().BeTrue();
+            eurasia.ComponentContinents.Contains(asia).Should().BeTrue();
+
+            afroEurasia.ComponentContinents.Count().Should().Be(2);
             afroEurasia.ComponentContinents.Contains(eurasia).Should().BeTrue();
             afroEurasia.ComponentContinents.Contains(africa).Should().BeTrue();
-            afroEurasia.ComponentContinents.Contains(europe).Should().BeTrue();
-            afroEurasia.ComponentContinents.Contains(asia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(europe).Should().BeFalse();
+            afroEurasia.ComponentContinents.Contains(asia).Should().BeFalse();
 
             afroEurasia.AddComponentContinent(europe);
             afroEurasia.AddComponentContinent(asia);
@@ -59,7 +62,7 @@ namespace WorldWeb.Domain.Tests
         }
 
         [Fact]
-        public void ContinentCantHaveSameComponentsContinentTwice()
+        public void ContinentCantHaveSameComponentContinentTwice()
         {
             var europe = new Continent(Names.Europe);
             var asia = new Continent(Names.Asia);
@@ -76,15 +79,15 @@ namespace WorldWeb.Domain.Tests
             afroEurasia.AddComponentContinent(europe);
             afroEurasia.AddComponentContinent(eurasia);
 
-            afroEurasia.ComponentContinents.Count().Should().Be(4);
+            afroEurasia.ComponentContinents.Count().Should().Be(3);
             afroEurasia.ComponentContinents.Contains(eurasia).Should().BeTrue();
             afroEurasia.ComponentContinents.Contains(africa).Should().BeTrue();
             afroEurasia.ComponentContinents.Contains(europe).Should().BeTrue();
-            afroEurasia.ComponentContinents.Contains(asia).Should().BeTrue();
+            afroEurasia.ComponentContinents.Contains(asia).Should().BeFalse();
         }
 
         [Fact]
-        public void EarthWithCompositeContinets()
+        public void EarthWithCompositeContinents()
         {
             var europe = new Continent(Names.Europe);
             var asia = new Continent(Names.Asia);
@@ -116,6 +119,16 @@ namespace WorldWeb.Domain.Tests
             earth.AddContinent(america);
             earth.AddContinent(oceania);
             earth.AddContinent(antarctica);
+
+            earth.Continents.Count().Should().Be(4);
+
+            earth.AddContinent(africa);
+            earth.AddContinent(eurasia);
+            earth.AddContinent(europe);
+            earth.AddContinent(asia);
+            earth.AddContinent(northAmerica);
+            earth.AddContinent(southAmerica);
+            earth.AddContinent(australia);
 
             earth.Continents.Count().Should().Be(11);
         }
