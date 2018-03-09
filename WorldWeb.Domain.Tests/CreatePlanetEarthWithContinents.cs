@@ -133,6 +133,38 @@ namespace WorldWeb.Domain.Tests
             earth.Continents.Count().Should().Be(11);
         }
 
+        [Fact]
+        public void ContinentsKnowTheirParentPlanet()
+        {
+            var earth = new Planet(Names.Earth);
+            var eurasia = new Continent(Names.Eurasia);
+
+            earth.AddContinent(eurasia);
+
+            eurasia.Planet.Should().Be(earth);
+        }
+
+        [Fact]
+        public void ContinentCanBeRemovedFromPlanet()
+        {
+            var earth = new Planet(Names.Earth);
+            var eurasia = new Continent(Names.Eurasia);
+
+            earth.AddContinent(eurasia);
+            earth.RemoveContinent(eurasia);
+
+            earth.Continents.Contains(eurasia).Should().BeFalse();
+            eurasia.Planet.Should().Be(Planet.None);
+        }
+
+        [Fact]
+        public void NewContinentHasPlanetNone()
+        {
+            var eurasia = new Continent(Names.Eurasia);
+
+            eurasia.Planet.Should().Be(Planet.None);
+        }
+
         private static class Names
         {
             public const string Earth = "Earth";

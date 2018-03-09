@@ -11,11 +11,14 @@
         public Continent(string name)
         {
             this.Name = name;
+            this.Planet = Planet.None;
         }
 
         public string Name { get; }
 
         public IEnumerable<Continent> ComponentContinents => new ReadOnlyCollection<Continent>(this.componentContinents.ToList());
+
+        public Planet Planet { get; internal set; }
 
         public void AddComponentContinent(Continent continent)
         {

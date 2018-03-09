@@ -6,6 +6,8 @@
 
     public class Planet
     {
+        public static readonly Planet None = new NullPlanet();
+
         private readonly HashSet<Continent> continents = new HashSet<Continent>();
 
         public Planet(string name)
@@ -17,9 +19,34 @@
 
         public IEnumerable<Continent> Continents => new ReadOnlyCollection<Continent>(this.continents.ToList());
 
-        public void AddContinent(Continent continent)
+        public virtual void AddContinent(Continent continent)
         {
-            this.continents.Add(continent);
+            if(this.continents.Add(continent))
+            {
+                continent.Planet = this;
+            }
+        }
+
+        public virtual void RemoveContinent(Continent eurasia)
+        {
+            this.continents.Remove(eurasia);
+            eurasia.Planet = None;
+        }
+
+        public class NullPlanet : Planet
+        {
+            public NullPlanet()
+                : base("None")
+            {
+            }
+
+            public override void AddContinent(Continent continent)
+            {
+            }
+
+            public override void RemoveContinent(Continent eurasia)
+            {
+            }
         }
     }
 }
