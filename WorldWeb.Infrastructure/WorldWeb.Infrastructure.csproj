@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldWeb.Core\WorldWeb.Core.csproj" />
-    <ProjectReference Include="..\WorldWeb.SqlServer\WorldWeb.SqlServer.sqlproj" />
   </ItemGroup>
 
 </Project>
