@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WorldWeb.Core\WorldWeb.Core.csproj" />
+    <ProjectReference Include="..\WorldWeb.DependencyInjection\WorldWeb.DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

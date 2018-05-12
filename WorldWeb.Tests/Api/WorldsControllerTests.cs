@@ -18,7 +18,7 @@
         {
             var worldRepository = WorldRepository()
                 .Contains(new World(1, "Dune Universe"))
-                .Contains(new World(2, "Tolkein Legendarium"));
+                .Contains(new World(2, "Tolkein Legendarium", "Middle Earth plus"));
 
             var controller = new WorldsController(worldRepository.Object);
             var result = controller.Get();
@@ -32,6 +32,7 @@
             worlds.Should().ContainSingle(w => w.Id == 2);
             var tolkeins = worlds.Single(w => w.Id == 2);
             tolkeins.Name.Should().Be("Tolkein Legendarium");
+            tolkeins.Description.Should().Be("Middle Earth plus");
         }
 
         private static Mock<IWorldRepository> WorldRepository()
